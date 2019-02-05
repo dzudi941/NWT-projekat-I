@@ -21,11 +21,11 @@ var app = new Vue({
         queryWeather(resource) {
             this.$http.get(serverUrl + this.query).then(response => {
                 this.message = response.data;
-                this.imageUrl = getIconPath(response.data.weather[0].icon);
-                this.mapUrl = getMapUrl(response.data.coord.lat, response.data.coord.lon);
+                this.imageUrl = parseIconPath(response.data.weather[0].icon);
+                this.mapUrl = parseMapUrl(response.data.coord.lat, response.data.coord.lon);
                 this.cityName = response.data.name;
                 this.weatherData = response.data;
-                this.temp = getTempInCelsius(response.data.main.temp);
+                this.temp = parseTempInCelsius(response.data.main.temp);
                 this.description = response.data.weather[0].description;
                 this.wind = parseWindSpeed(response.data.wind.speed);
                 this.humidity = parseHumidity(response.data.main.humidity);
@@ -40,15 +40,15 @@ var app = new Vue({
     }
 });
 
-function  getIconPath(iconName) {
+function  parseIconPath(iconName) {
     return `assets/icons/${iconName}.png`;
 }
 
-function getMapUrl(latitude, longitude) {
+function parseMapUrl(latitude, longitude) {
     return `https://www.google.com/maps/embed/v1/place?key=AIzaSyA92Qb_TEkGbXJ6_94JZv9iZbtWWhaLqCI&q=${latitude},${longitude}`
 }
 
-function getTempInCelsius(far) {
+function parseTempInCelsius(far) {
     let celsius = far - 273.15;
     return `Temp: ${(Math.round(celsius * 100) / 100)} °C`;
 }
