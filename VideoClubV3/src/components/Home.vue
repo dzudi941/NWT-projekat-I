@@ -24,7 +24,7 @@
                     {{ movie.Director }}
                 </td>
                 <td>
-                    {{ movie.Year.split("T")[0] }}
+                    {{ new Date(movie.Year).toLocaleDateString() }}
                 </td>
                 <td>
                     {{ movie.Count }}
